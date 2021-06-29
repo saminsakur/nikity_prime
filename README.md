@@ -1,4 +1,4 @@
-# nikity_prime
+# Nikity Prime
 
-*A Discord bot
+*A Discord bot*
 <br>https://discordpy.readthedocs.io/en/stable/
