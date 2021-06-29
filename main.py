@@ -1,26 +1,17 @@
-import os
+import discord
 from decouple import config
-import discord as dc
-from discord import message
 
-client = dc.Client()
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f"[Info] Logged in as {self.user.name} {self.user.id}")
+        print("####################")
+    async def on_message(self, message):
+        # if message.author.id == self.user.id:
+        #     return
 
-@client.event
-async def on_ready():
-    print(f"We have logged in as {client.user}")
+        if message.content.startswith('hello'):
+            await message.channel.send('Hello! how are you?')
 
-@client.event
-async def on_messege(messege):
-    print("[INFO] Messege recived")
-    if messege.author == client.user:
-        return
-
-    msg = message.content
-
-    if msg.startswith('!hello'):
-        print("[INFO] recived a messege that start with !hello")
-        await message.channel.send('Hello world!')
-
-
+client = MyClient()
 x = config('TOKEN')
-client.run(x)
+client.run(str(x))
