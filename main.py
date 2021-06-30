@@ -2,145 +2,13 @@ import discord
 import random
 import requests
 import json
+from words import *
 from decouple import config
 
 
 jokesUrl = r"https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/jokes"
 
-greetings_words = [
-    "What's up!", 
-    "what's up!", 
-    "whats up",
-    "whats up!", 
-    "Whats up!", 
-    "What's up",
-    "what' s up!",
-    "What' s up!",
-    "What' s up",
-    "what' s up",
-    "hello",
-    "Hello",
-    "hello!",
-    "Hello!",
-    "Hi",
-    "Hi!",
-    "hi", 
-    "Sup", 
-    "sup",
-    "Sup!",
-    "sup!",
-    "Hey",
-    "hey",
-    "hey!",
-    "Hey!",
-    "Heyy",
-    "Heyyy",
-    "Heyyy!!!",
-    "Heyyy!",
-    "Heyy",
-    "Heyy!",
-    "Hey!!!",
-    "Yo!",
-    "yo!",
-    "yo",
-    "Yo",
-    "Hello!",
-    "Hey there!",
-    "Hey!",
-    "Sup", 
-    "What's up!", 
-    "Hey! 😃"
-]
 
-health_question = [
-    "How are you?",
-    "How are you doing?",
-    "how are you?",
-    "How are you",
-    "how are you",
-    "how are you doing?",
-    "How do you do?",
-    "how do you do?"
-]
-
-health_question_response = [
-    "Fine!, how are you?",
-    "Fine!",
-    "I'm Fine! thanks!",
-    "I'm fine!",
-    "I'm fine",
-    "I'm fine! thank u",
-    "I'm fine! thank you! 😃",
-    "I'm fine! thank you!",
-    "I'm fine",
-    "I am fine!",
-    "I am fine",
-    "I'm well",
-    "I'm well!",
-    "I'm great!",
-    "I'm great",
-    "Fine! thank you! how are you?"
-] 
-
-health_question_response_reply = [
-    "Nice you see",
-    "Nice to know",
-    "Great!"
-]
-thanking_words = [
-    "Thank u",
-    "thanks!", 
-    "Thanks!",
-    "Thanks",
-    "thanks",
-    "Thank u!", 
-    "Thank you!", 
-    "thank you!", 
-    "thank you",
-    "Thank you",
-    "tq"
-]
-
-bot_question = [
-    "Are you a bot?",
-    "are you a bot?"
-]
-
-some_random_words = [
-    "😀",
-    "...",
-    ".",
-    "hehe"
-]
-
-making_sad_words = [
-    "You are a dumb",
-    "you are a dumb",
-    "You are a dumb!",
-    "you are a dumb"
-    "You're a dumb!", 
-    "you're a dumb!",
-    "you're a dumb", 
-    "You're a nonesense",
-    "You are a nonesense"
-]
-
-question_self_health = [
-    "Ask me how I am",
-    "ask me how am I",
-    "ask me how am i",
-    "Ask me how I'm doing", 
-    "Ask me how am I"
-]
-
-x = [
-    "Be quiet",
-    "be quiet",
-    "silence",
-    "Chup",
-    "chup",
-    "Chup!"
-]
 
 def getJoke(u):
     r = requests.get(u)
@@ -148,9 +16,7 @@ def getJoke(u):
     return jo
 
 def matchwhole(content, list_to_match:list):
-    for i in list_to_match:
-        return i == content
- 
+    return content in list_to_match
 
 def matchstartswith(content, list_to_match:list):
     return any([content.startswith(i) for i in list_to_match])
@@ -186,7 +52,10 @@ class BotClient(discord.Client):
         elif matchstartswith(msg, question_self_health):
             await message.reply("Oh! How are you? 😃")
 
-        elif message.content == "ping":
+        elif matchwhole(msg, ["Me too!", "me too!", "Me too", "me too"]):
+            await message.reply("Ooo")
+
+        elif msg == "ping":
             await message.reply("pong", mention_author=True)
 
         elif matchstartswith(msg, some_random_words):
