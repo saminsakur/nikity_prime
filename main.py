@@ -8,8 +8,7 @@ from decouple import config
 
 jokesUrl = r"https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/jokes"
 
-
-
+    
 def getJoke(u):
     r = requests.get(u)
     jo = json.loads(r.text)
@@ -28,16 +27,25 @@ class BotClient(discord.Client):
 
 
     async def on_message(self, message):
+        msg = message.content
+
         if not message.author.id == self.user.id:
             print(f"[INFO] A messege have been recived from {message.author.name} {message.author.id}")
+            print(f"{message.author.name} {message.author.id} {msg}")
 
         if message.author.id == self.user.id:   
             print("[INFO] A messege has been sent")
+            print(f"{message.author.name} {message.author.id} {msg}")
             return                      # Make sure that the bot doesn't reply to itself
 
-        msg = message.content
 
         if  matchwhole(msg, greetings_words):
+            await message.reply(greetings_words[random.randint(0, len(greetings_words) -1)])
+
+        elif matchstartswith(msg, special_grettings):
+            await message.reply(greetings_words[random.randint(0, len(greetings_words) -1)])
+
+        elif matchstartswith(msg, hello_to_bot):
             await message.reply(greetings_words[random.randint(0, len(greetings_words) -1)])
 
         elif matchstartswith(msg, health_question):
@@ -52,7 +60,7 @@ class BotClient(discord.Client):
         elif matchstartswith(msg, question_self_health):
             await message.reply("Oh! How are you? 😃")
 
-        elif matchwhole(msg, ["Me too!", "me too!", "Me too", "me too"]):
+        elif matchwhole(msg, too_like_pharse):
             await message.reply("Ooo")
 
         elif msg == "ping":
@@ -67,11 +75,14 @@ class BotClient(discord.Client):
         elif matchstartswith(msg, making_sad_words):
             await message.reply("Ouch! 🥺")
 
-        elif matchstartswith(msg, x):
+        elif any([msg.startswith(i) for i in shutting_bot]):
             await message.reply("Okay 🤐")
     
         elif matchstartswith(msg, thanking_words):
             await message.reply("Welcome!")
+
+        elif matchstartswith(msg, fun_reaction):
+            await message.reply(fun_reaction_reply[random.randint(0, len(fun_reaction_reply) -1)])
 
         elif message.content == "I'm from the east side of america":
             await message.reply(
@@ -82,16 +93,17 @@ class BotClient(discord.Client):
 
         elif matchstartswith(msg, ["!joke", "Tell a joke", "tell a joke", "Tell me a joke", "tell me a joke", "Joke please"]):
             jsonJoke = getJoke(jokesUrl)
-            print(jsonJoke)
             jokeType = jsonJoke['type']
             setup = jsonJoke['setup']
             punchline = jsonJoke['punchline']
             await message.channel.send(f"**{jokeType}**\n{setup}\n{punchline}")
 
-        # else:
+        # else:                                         # Uncomment if you like    
         #    await message.reply("Sorry! cannot get that! 😶")
 
 
-client = BotClient()
 x = config('TOKEN')
-client.run(str(x))
+
+if __name__ == "__main__":
+    client = BotClient()
+    client.run(str(x))

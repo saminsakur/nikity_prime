@@ -1,6 +1,6 @@
 greetings_words = [
     "What's up!", 
-    "what's up!", 
+    "what's up!",
     "whats up",
     "whats up!", 
     "Whats up!", 
@@ -43,6 +43,75 @@ greetings_words = [
     "Hey! 😃"
 ]
 
+special_grettings =[
+    "hlw",
+    "Hlw",
+    "What's up!", 
+    "what's up!", 
+    "What's up",
+    "what's up",
+    "whats up",
+    "whats up!", 
+    "Whats up!", 
+    "What's up",
+    "what' s up!",
+    "What' s up!",
+    "What' s up",
+    "what' s up",
+    "hello",
+    "Hello",
+    "hello!",
+    "Hello!",
+    "Hi",
+    "hi", 
+    "Hi!",
+    "hi!",
+    "H!",
+    "Sup", 
+    "sup",
+    "Sup!",
+    "sup!",
+    "Hey",
+    "hey",
+    "hey!",
+    "Hey!",
+    "Heyy",
+    "Heyyy",
+    "Heyyy!!!",
+    "Heyyy!",
+    "Heyy",
+    "Heyy!",
+    "Hey!!!",
+    "Yo!",
+    "yo!",
+    "Hello!",
+    "Hey there!",
+    "Hey!",
+    "Sup", 
+    "What's up!", 
+    "Hey! 😃"
+]
+
+hello_to_bot = [
+    "Hello, bot",
+    "hello, bot",
+    "Hello bot",
+    "hello bot",
+    "Hey bot",
+    "hey bot",
+    "Hey! bot",
+    "hey! bot",
+    "Hello, robot",
+    "hello, robot",
+    "Hello robot",
+    "hello robot",
+    "Hey robot",
+    "hey robot",
+    "Hey! robot",
+    "hey! robot",
+
+]
+
 health_question = [
     "How are you?",
     "How are you doing?",
@@ -81,6 +150,7 @@ health_question_response_reply = [
     "Nice to know",
     "Great!"
 ]
+
 thanking_words = [
     "Thank u",
     "thanks!", 
@@ -104,7 +174,6 @@ some_random_words = [
     "😀",
     "...",
     ".",
-    "hehe"
 ]
 
 making_sad_words = [
@@ -127,11 +196,43 @@ question_self_health = [
     "Ask me how am I"
 ]
 
-x = [
+shutting_bot = [
     "Be quiet",
     "be quiet",
     "silence",
+    "be silent",
+    "Be silent",
+    "Chup kor",
+    "chup kor",
     "Chup",
     "chup",
-    "Chup!"
+    "Chup!",
+    "chup!",
+    "Shup up!",
+    "Shut up",
+    "shut up!",
+    "shut up"
+]
+
+too_like_pharse = [
+    "Me too!",
+    "me too!",
+    "Me too",
+    "me too"
+]
+
+fun_reaction =[
+    "Hehe",
+    "haha",
+    "Haha",
+    "heha",
+    "😂",
+    "🤣",
+
+]
+
+fun_reaction_reply = [
+    "😂",
+    "🤣",
+    "Hehe"
 ]
