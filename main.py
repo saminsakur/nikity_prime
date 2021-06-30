@@ -4,6 +4,9 @@ import requests
 import json
 from decouple import config
 
+
+jokesUrl = r"https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/jokes"
+
 greetings_words = [
     "What's up!", 
     "what's up!", 
@@ -65,9 +68,10 @@ health_question_response = [
     "Fine!",
     "I'm Fine! thanks!",
     "I'm fine!",
+    "I'm fine",
     "I'm fine! thank u",
     "I'm fine! thank you! 😃",
-    "I'm fine! thank you!"
+    "I'm fine! thank you!",
     "I'm fine",
     "I am fine!",
     "I am fine",
@@ -115,16 +119,33 @@ making_sad_words = [
     "You are a dumb!",
     "you are a dumb"
     "You're a dumb!", 
-    "you're a dumb!"
+    "you're a dumb!",
     "you're a dumb", 
     "You're a nonesense",
     "You are a nonesense"
 ]
 
-def getJoke():
-    r = requests.get(r"https://dad-jokes.p.rapidapi.com/random/joke")
-    j = json.loads(r)
-    return j
+question_self_health = [
+    "Ask me how I am",
+    "ask me how am I",
+    "ask me how am i",
+    "Ask me how I'm doing", 
+    "Ask me how am I"
+]
+
+x = [
+    "Be quiet",
+    "be quiet",
+    "silence",
+    "Chup",
+    "chup",
+    "Chup!"
+]
+
+def getJoke(u):
+    r = requests.get(u)
+    jo = json.loads(r.text)
+    return jo
 
 def matchwhole(content, list_to_match:list):
     for i in list_to_match:
@@ -132,7 +153,7 @@ def matchwhole(content, list_to_match:list):
  
 
 def matchstartswith(content, list_to_match:list):
-    return any(content.startswith(i) for i in list_to_match)
+    return any([content.startswith(i) for i in list_to_match])
 
 class BotClient(discord.Client):
     async def on_ready(self):
@@ -159,11 +180,11 @@ class BotClient(discord.Client):
         elif matchstartswith(msg, health_question_response):
             await message.reply(health_question_response_reply[random.randint(0 , len(health_question_response_reply) -1)])
 
-        elif any(message.content.startswith(i) for i in bot_question):
+        elif matchstartswith(msg, bot_question):
             await message.reply("Yes I am!")
 
-        elif matchstartswith(msg, ["Ask me how I am", "Ask me how am I"]):
-            await message.reply("How are you? 😃")
+        elif matchstartswith(msg, question_self_health):
+            await message.reply("Oh! How are you? 😃")
 
         elif message.content == "ping":
             await message.reply("pong", mention_author=True)
@@ -176,6 +197,9 @@ class BotClient(discord.Client):
 
         elif matchstartswith(msg, making_sad_words):
             await message.reply("Ouch! 🥺")
+
+        elif matchstartswith(msg, x):
+            await message.reply("Okay 🤐")
     
         elif matchstartswith(msg, thanking_words):
             await message.reply("Welcome!")
@@ -188,7 +212,12 @@ class BotClient(discord.Client):
             await message.channel.send("I'm a bot made by @sam.in#3588")
 
         elif matchstartswith(msg, ["!joke", "Tell a joke", "tell a joke", "Tell me a joke", "tell me a joke", "Joke please"]):
-            await message.channel.send(getJoke)
+            jsonJoke = getJoke(jokesUrl)
+            print(jsonJoke)
+            jokeType = jsonJoke['type']
+            setup = jsonJoke['setup']
+            punchline = jsonJoke['punchline']
+            await message.channel.send(f"**{jokeType}**\n{setup}\n{punchline}")
 
         # else:
         #    await message.reply("Sorry! cannot get that! 😶")
