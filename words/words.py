@@ -1,3 +1,8 @@
+"""
+    Separate python file containing list of self-defined questions
+    Author - Samin Sakur
+"""
+
 greetings_words = [
     "What's up!", 
     "what's up!",
@@ -185,7 +190,8 @@ making_sad_words = [
     "you're a dumb!",
     "you're a dumb", 
     "You're a nonesense",
-    "You are a nonesense"
+    "You are a nonesense",
+    "are you a dumb?",
 ]
 
 question_self_health = [
@@ -228,11 +234,18 @@ fun_reaction =[
     "heha",
     "😂",
     "🤣",
-
 ]
 
 fun_reaction_reply = [
     "😂",
     "🤣",
     "Hehe"
+]
+
+telling_for_quotes = [
+   "!quote",
+   "quote please",
+   "tell me a quote",
+   "inspire me",
+   "!inspire"
 ]
