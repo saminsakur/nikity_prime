@@ -94,7 +94,8 @@ special_grettings =[
     "Hey!",
     "Sup", 
     "What's up!", 
-    "Hey! 😃"
+    "Hey! 😃",
+    "👋"
 ]
 
 hello_to_bot = [
@@ -214,10 +215,10 @@ shutting_bot = [
     "chup",
     "Chup!",
     "chup!",
-    "Shup up!",
-    "Shut up",
     "shut up!",
     "shut up"
+    "Shup up!",
+    "Shut up",
 ]
 
 too_like_pharse = [
@@ -248,4 +249,21 @@ telling_for_quotes = [
    "tell me a quote",
    "inspire me",
    "!inspire"
+]
+
+nice_words = [
+    "good",
+    "nice",
+    "well",
+    "great",
+]
+
+askingforjoke = [
+    "!joke",
+    "Tell a joke", 
+    "tell a joke", 
+    "Tell me a joke", 
+    "tell me a joke", 
+    "Joke please", 
+    "joke please"
 ]
