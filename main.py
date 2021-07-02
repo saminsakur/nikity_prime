@@ -9,7 +9,7 @@
 
 import discord
 import random
-from discord import message
+import re
 import requests
 import json
 from words.words import *
@@ -20,6 +20,9 @@ jokesUrl = r"https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/j
 quotesUrl = r"https://zenquotes.io/api/random"
 
 mention = f'<@!858740782503952384>'
+
+mention_pattern = re.compile(r"^<@!858740782503952384>+[^\s]+.+")
+mentionspace_pattern = re.compile(r"^<@!858740782503952384>+\s+.+")
 
 
 def getJoke(url):
@@ -44,23 +47,23 @@ def matchstartswith(message, content, list_to_match:list):
     mentionspace = mention+" "
     
     if client.user.mentioned_in(message):
-        # if mention in message.content:
-        #     x = message.content.replace(mention, "")
-        #     print(x)
-        #     n1 = []
-        #     n2 = []
-        #     for i in list_to_match:
-        #         c1 = x.startswith(i)              # Cheches if the content is present in the list
-        #         n1.append(c1)
+        if mention_pattern.search(content):
+            x = content.replace(mention, "")
+            print(x)
+            n1 = []
+            n2 = []
+            for i in list_to_match:
+                c1 = x.startswith(i)              # Cheches if the content is present in the list
+                n1.append(c1)
 
-        #         c2 = x.startswith(i.capitalize()) # Capitalizes the item of the list and tries checkes again
-        #         n2.append(c2)
+                c2 = x.startswith(i.capitalize()) # Capitalizes the item of the list and tries checkes again
+                n2.append(c2)
         
-        #     return any(n1) or any(n2)   # If one of them True, returns True else returns False
+            return any(n1) or any(n2)   # If one of them True, returns True else returns False
 
 
-        if mentionspace in message.content:
-            y = message.content.replace(mentionspace, "")
+        if mentionspace_pattern.search(content):
+            y = content.replace(mentionspace, "")
             print(y)
             n1 = []
             n2 = []
@@ -174,10 +177,6 @@ class BotClient(discord.Client):
 
         elif matcheachwrd(msg, ["Good"]):
             await message.reply(random.choice(health_question_response_reply))
-
-        # if client.user.mentioned_in(message):
-        #     await message.channel.send('You mentioned me!')
-
 
         # else:                                         # Uncomment if you like    
         #    await message.reply("Sorry! cannot get that! 😶")

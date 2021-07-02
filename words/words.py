@@ -134,7 +134,7 @@ health_question_response = [
     "fine! how are you?",
     "Fine! how are you doing?",
     "fine! how are you doing?",
-    "Fine!",
+    "fine!",
     "I'm Fine! thanks!",
     "I'm fine!",
     "I'm fine",
