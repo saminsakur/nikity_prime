@@ -14,6 +14,7 @@ import requests
 import json
 from words.words import *
 from decouple import config
+import run
 
 jokesUrl = r"https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/jokes"
 quotesUrl = r"https://zenquotes.io/api/random"
@@ -197,5 +198,6 @@ class BotClient(discord.Client):
 
 if __name__ == "__main__":
     x = config('TOKEN')
+    run.keep_running()
     client = BotClient()
     client.run(str(x))
