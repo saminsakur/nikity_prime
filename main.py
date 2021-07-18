@@ -15,7 +15,6 @@ import json
 from words.words import *
 from decouple import config
 
-
 jokesUrl = r"https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/jokes"
 quotesUrl = r"https://zenquotes.io/api/random"
 
@@ -30,82 +29,93 @@ def getJoke(url):
     jsonData = json.loads(r.text)
     return jsonData
 
+
 def getQuote(url):
     r = requests.get(url)
     jsonData = json.loads(r.text)
     return jsonData[0]['q'] + '\n - ' + jsonData[0]['a']
 
-def matchwhole(content, list_to_match:list):
+
+def matchwhole(content, list_to_match: list):
     return content in list_to_match
+
 
 def matcheachwrd(content, list_to_match):
     x = any([i in content for i in list_to_match])
     y = any([i.capitalize() in content for i in list_to_match])
     return x or y
 
-def matchstartswith(message, content, list_to_match:list):
-    mentionspace = mention+" "
-    
+
+def matchstartswith(message, content, list_to_match: list):
+    mentionspace = mention + " "
+
     if client.user.mentioned_in(message):
         if mention_pattern.search(content):
             x = content.replace(mention, "")
-            print(x)
             n1 = []
             n2 = []
+            n3 = []
             for i in list_to_match:
-                c1 = x.startswith(i)              # Cheches if the content is present in the list
+                c1 = x.startswith(i)  # Cheches if the content is present in the list
                 n1.append(c1)
 
-                c2 = x.startswith(i.capitalize()) # Capitalizes the item of the list and tries checkes again
+                c2 = x.startswith(i.capitalize())  # Capitalizes the item of the list and tries checkes again
                 n2.append(c2)
-        
-            return any(n1) or any(n2)   # If one of them True, returns True else returns False
 
+                c3 = x.startswith(i.upper())
+                n3.append(c3)
+
+            return any(n1) or any(n2) or any(n3)  # If one of them True, returns True else returns False
 
         if mentionspace_pattern.search(content):
             y = content.replace(mentionspace, "")
-            print(y)
             n1 = []
             n2 = []
+            n3 = []
             for i in list_to_match:
-                c1 = y.startswith(i)              # Cheches if the content is present in the list
+                c1 = y.startswith(i)  # Cheches if the content is present in the list
                 n1.append(c1)
 
-                c2 = y.startswith(i.capitalize()) # Capitalizes the item of the list and tries checkes again
+                c2 = y.startswith(i.capitalize())  # Capitalizes the item of the list and tries checkes again
                 n2.append(c2)
-                
-            return any(n1) or any(n2)   # If one of them True, returns True else returns False
+
+                c3 = y.startswith(i.upper())
+                n3.append(c3)
+
+            return any(n1) or any(n2) or any(n3)  # If one of them True, returns True else returns False
 
 
     else:
         n1 = []
         n2 = []
+        n3 = []
         for i in list_to_match:
-            c1 = content.startswith(i)              # Cheches if the content is present in the list
+            c1 = content.startswith(i)  # Cheches if the content is present in the list
             n1.append(c1)
 
-            c2 = content.startswith(i.capitalize()) # Capitalizes the item of the list and tries checkes again
+            c2 = content.startswith(i.capitalize())  # Capitalizes the item of the list and tries checkes again
             n2.append(c2)
-        
-        return any(n1) or any(n2)   # If one of them True, returns True else returns False
-    
+
+            c3 = content.startswith(i.upper())
+            n3.append(c3)
+
+        return any(n1) or any(n2) or any(n3)  # If one of them True, returns True else returns False
+
 
 class BotClient(discord.Client):
     async def on_ready(self):
         print(f"[INFO] Logged in as {self.user.name} {self.user.id}")
         print("___________________________________________")
 
-
     async def on_message(self, message):
         msg = message.content
 
-        if not message.author.id == self.user.id:
+        if message.author.id != self.user.id:
             print(f"[INFO] A messege recived from {message.author.name} {message.author.id} - {msg}")
 
-        elif message.author.id == self.user.id:
+        if message.author.id == self.user.id:
             print(f"[INFO] messege sent - {msg}")
-            return                      # Make sure that the bot doesn't reply to itself
-
+            return  # Make sure that the bot doesn't reply to itself
 
         if matchwhole(msg, greetings_words):
             await message.reply(random.choice(greetings_words))
@@ -140,7 +150,7 @@ class BotClient(discord.Client):
         elif matchstartswith(message, msg, ["Is Mahin a dumb?", "is mahin a dumb?"]):
             await message.reply("Yes he is 🤣")
 
-        elif matchstartswith(message, msg, ["Is Samin a dumb?", "is samin a dumb?"]):    # ME
+        elif matchstartswith(message, msg, ["Is Samin a dumb?", "is samin a dumb?"]):  # ME
             await message.reply("Aren't you a human? A human can tell this better.")
 
         elif matchstartswith(message, msg, making_sad_words):
@@ -148,7 +158,7 @@ class BotClient(discord.Client):
 
         elif matcheachwrd(msg, shutting_bot):
             await message.reply("Okay 🤐")
-    
+
         elif matchstartswith(message, msg, thanking_words):
             await message.reply("Welcome!")
 
@@ -178,10 +188,11 @@ class BotClient(discord.Client):
         elif matcheachwrd(msg, ["Good"]):
             await message.reply(random.choice(health_question_response_reply))
 
-        # else:                                         # Uncomment if you like    
-        #    await message.reply("Sorry! cannot get that! 😶")
+        elif matchstartswith(message, msg, ["wow"]):
+            await message.reply("😃")
 
-            
+        # else:                                                    # Uncomment if you like    
+        #    await message.reply("Sorry! cannot get that! 😶")
 
 
 if __name__ == "__main__":
