@@ -9,6 +9,7 @@
 
 import discord
 import random
+import os
 import re
 import requests
 import json
@@ -198,7 +199,7 @@ class BotClient(discord.Client):
 
 
 if __name__ == "__main__":
-    x = S3Connection((config('TOKEN')))
+    x = S3Connection(os.environ['TOKEN'])
     run.keep_running()
     client = BotClient()
     client.run(str(x))
