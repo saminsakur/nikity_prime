@@ -123,6 +123,12 @@ class BotClient(discord.Client):
         if matchwhole(msg, greetings_words):
             await message.reply(random.choice(greetings_words))
 
+        elif msg == "!help":
+            embed = discord.Embed(title="Help on Nikity_prime", description="some useful commands")
+            embed.add_field(name="Hello", value="replies with grettings")
+            embed.add_field(name="!joke", value="sends a random joke")
+            embed.add_field(name="!quote", value="sends an inspirational quote")
+
         elif matchstartswith(message, msg, special_grettings):
             await message.reply(random.choice(greetings_words))
 
