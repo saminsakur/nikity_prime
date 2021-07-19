@@ -9,11 +9,13 @@
 
 import discord
 import random
+import os
 import re
 import requests
 import json
 from words.words import *
 from decouple import config
+from boto.s3.connection import S3Connection
 import run
 
 jokesUrl = r"https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/jokes"
@@ -91,7 +93,7 @@ def matchstartswith(message, content, list_to_match: list):
         n2 = []
         n3 = []
         for i in list_to_match:
-            c1 = content.startswith(i)  # Cheches if the content is present in the list
+            c1 = content.startswith(i)  # Checkes if the content is present in the list
             n1.append(c1)
 
             c2 = content.startswith(i.capitalize())  # Capitalizes the item of the list and tries checkes again
@@ -120,6 +122,12 @@ class BotClient(discord.Client):
 
         if matchwhole(msg, greetings_words):
             await message.reply(random.choice(greetings_words))
+
+        elif msg == "!help":
+            embed = discord.Embed(title="Help on Nikity_prime", description="some useful commands")
+            embed.add_field(name="Hello", value="replies with grettings")
+            embed.add_field(name="!joke", value="sends a random joke")
+            embed.add_field(name="!quote", value="sends an inspirational quote")
 
         elif matchstartswith(message, msg, special_grettings):
             await message.reply(random.choice(greetings_words))
@@ -197,7 +205,7 @@ class BotClient(discord.Client):
 
 
 if __name__ == "__main__":
-    x = config('TOKEN')
+    x = os.environ['TOKEN']
     run.keep_running()
     client = BotClient()
     client.run(str(x))
