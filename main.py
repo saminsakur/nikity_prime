@@ -199,7 +199,7 @@ class BotClient(discord.Client):
 
 
 if __name__ == "__main__":
-    x = S3Connection(os.environ['TOKEN'])
+    x = os.environ['TOKEN']
     run.keep_running()
     client = BotClient()
     client.run(str(x))
